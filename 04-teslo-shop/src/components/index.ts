@@ -1,3 +1,4 @@
+export { Pagination } from "./ui/pagination/Pagination";
 export { Footer } from "./ui/footer/Footer";
 export { PageNotFound } from "./ui/not-found/PageNotFound";
 export { ProductGrid } from "./products/product-grid/ProductGrid";
