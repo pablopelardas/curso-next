@@ -11,6 +11,21 @@ export const authConfig: NextAuthConfig = {
     signOut: "/auth/logout",
     error: "/auth/error",
   },
+  callbacks: {
+    jwt({ token, user }) {
+      if (user) {
+        token.data = user;
+      }
+      return token;
+    },
+    session({ session, token, user }) {
+      console.log({ session, token, user });
+      if (token?.data) {
+        session.user = token.data as any;
+      }
+      return session;
+    },
+  },
   providers: [
     credentials({
       async authorize(credentials) {
@@ -32,7 +47,6 @@ export const authConfig: NextAuthConfig = {
         if (!user) return null;
         if (!bcryptjs.compareSync(password, user.password)) return null;
         const { password: _, ...rest } = user;
-        console.log(rest);
         return rest;
       },
     }),
