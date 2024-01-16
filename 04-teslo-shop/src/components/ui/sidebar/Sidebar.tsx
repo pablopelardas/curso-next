@@ -30,7 +30,7 @@ export const Sidebar = () => {
       {/* Sidemenu */}
       <nav
         className={clsx(
-          "fixed p-5 right-0 top-0 w-[500px] h-screen bg-white z-20 shadow-2xl transform transition-all duration-300",
+          "fixed p-5 right-0 top-0 w-[300px] h-screen bg-white z-20 shadow-2xl transform transition-all duration-300",
           {
             "translate-x-full": !isSideMenuOpen,
           }
@@ -52,55 +52,56 @@ export const Sidebar = () => {
         </div>
         {/* Menu */}
         <Link
-          href="/"
-          className="flex items-center mt-10 p-2 hover:bg-gray-100 rounded transition-all"
+          href="/profile"
+          onClick={() => closeSideMenu()}
+          className="flex items-center mt-5 p-2 hover:bg-gray-100 rounded transition-all"
         >
           <IoPersonOutline size={30} />
-          <span className="ml-3 text-xl">Perfil</span>
+          <span className="ml-3 text-lg">Perfil</span>
         </Link>
         <Link
           href="/"
-          className="flex items-center mt-10 p-2 hover:bg-gray-100 rounded transition-all"
+          className="flex items-center mt-5 p-2 hover:bg-gray-100 rounded transition-all"
         >
           <IoTicketOutline size={30} />
-          <span className="ml-3 text-xl">Ordenes</span>
+          <span className="ml-3 text-lg">Ordenes</span>
         </Link>
         <Link
           href="/"
-          className="flex items-center mt-10 p-2 hover:bg-gray-100 rounded transition-all"
+          className="flex items-center mt-5 p-2 hover:bg-gray-100 rounded transition-all"
         >
           <IoLogInOutline size={30} />
-          <span className="ml-3 text-xl">Ingresar</span>
+          <span className="ml-3 text-lg">Ingresar</span>
         </Link>
         <Link
           href="/"
-          className="flex items-center mt-10 p-2 hover:bg-gray-100 rounded transition-all"
+          className="flex items-center mt-5 p-2 hover:bg-gray-100 rounded transition-all"
         >
           <IoLogOutOutline size={30} />
-          <span className="ml-3 text-xl">Salir</span>
+          <span className="ml-3 text-lg">Salir</span>
         </Link>
         {/* Line separator */}
         <div className="w-full h-px bg-gray-200 my-10"></div>
         <Link
           href="/"
-          className="flex items-center mt-10 p-2 hover:bg-gray-100 rounded transition-all"
+          className="flex items-center mt-5 p-2 hover:bg-gray-100 rounded transition-all"
         >
           <IoShirtOutline size={30} />
-          <span className="ml-3 text-xl">Productos</span>
+          <span className="ml-3 text-lg">Productos</span>
         </Link>
         <Link
           href="/"
-          className="flex items-center mt-10 p-2 hover:bg-gray-100 rounded transition-all"
+          className="flex items-center mt-5 p-2 hover:bg-gray-100 rounded transition-all"
         >
           <IoTicketOutline size={30} />
-          <span className="ml-3 text-xl">Ordenes</span>
+          <span className="ml-3 text-lg">Ordenes</span>
         </Link>
         <Link
           href="/"
-          className="flex items-center mt-10 p-2 hover:bg-gray-100 rounded transition-all"
+          className="flex items-center mt-5 p-2 hover:bg-gray-100 rounded transition-all"
         >
           <IoPeopleOutline size={30} />
-          <span className="ml-3 text-xl">Clientes</span>
+          <span className="ml-3 text-lg">Clientes</span>
         </Link>
       </nav>
     </div>

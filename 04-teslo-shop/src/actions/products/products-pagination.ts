@@ -6,11 +6,13 @@ import { Product } from "@prisma/client";
 interface PaginationOptions {
   page?: number;
   take?: number;
+  gender?: string;
 }
 
 export const getPaginatedproducts = async ({
   page = 1,
   take = 12,
+  gender = "",
 }: PaginationOptions) => {
   if (isNaN(Number(page))) page = 1;
   if (page < 1) page = 1;
@@ -25,14 +27,24 @@ export const getPaginatedproducts = async ({
     > = [];
     let totalPages: number = 0;
 
+    const filters: { where: { [key: string]: string } } = { where: {} };
+    if (gender) {
+      filters.where = {
+        gender,
+      };
+    }
+
     await Promise.all([
       prisma.product
-        .count()
+        .count({
+          where: filters.where,
+        })
         .then((count) => (totalPages = Math.ceil(count / take))),
       prisma.product
         .findMany({
           skip: (page - 1) * take,
           take,
+          where: filters.where,
           include: {
             ProductImage: {
               take: 2,
@@ -46,7 +58,6 @@ export const getPaginatedproducts = async ({
     ]);
 
     return {
-      currentPage: page,
       totalPages,
       products: Array.isArray(products)
         ? products.map((product) => ({

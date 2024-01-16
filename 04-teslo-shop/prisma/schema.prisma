@@ -24,6 +24,11 @@ enum Gender {
   unisex
 }
 
+enum Role {
+  ADMIN
+  USER
+}
+
 model Category {
   id   String @id @default(uuid())
   name String @unique
@@ -55,4 +60,14 @@ model ProductImage {
   productId String
 
   product Product @relation(fields: [productId], references: [id])
+}
+
+model User {
+  id            String    @id @default(uuid())
+  name          String
+  email         String    @unique
+  password      String
+  emailVerified DateTime?
+  role          Role      @default(USER)
+  image         String?
 }
