@@ -21,6 +21,38 @@ export const Sidebar = () => {
 
   const { data: session } = useSession();
   const isAuthenticated = !!session?.user;
+  const isAdmin = session?.user.role === "ADMIN";
+
+  const userNav = [
+    {
+      title: "Perfil",
+      icon: <IoPersonOutline size={30} />,
+      link: "/profile",
+    },
+    {
+      title: "Ordenes",
+      icon: <IoTicketOutline size={30} />,
+      link: "/",
+    },
+  ];
+
+  const adminNav = [
+    {
+      title: "Productos",
+      icon: <IoShirtOutline size={30} />,
+      link: "/",
+    },
+    {
+      title: "Ordenes",
+      icon: <IoTicketOutline size={30} />,
+      link: "/",
+    },
+    {
+      title: "Clientes",
+      icon: <IoPeopleOutline size={30} />,
+      link: "/",
+    },
+  ];
 
   return (
     <div>
@@ -56,21 +88,19 @@ export const Sidebar = () => {
           />
         </div>
         {/* Menu */}
-        <Link
-          href="/profile"
-          onClick={() => closeSideMenu()}
-          className="flex items-center mt-5 p-2 hover:bg-gray-100 rounded transition-all"
-        >
-          <IoPersonOutline size={30} />
-          <span className="ml-3 text-lg">Perfil</span>
-        </Link>
-        <Link
-          href="/"
-          className="flex items-center mt-5 p-2 hover:bg-gray-100 rounded transition-all"
-        >
-          <IoTicketOutline size={30} />
-          <span className="ml-3 text-lg">Ordenes</span>
-        </Link>
+        {isAuthenticated &&
+          !isAdmin &&
+          userNav.map((item, index) => (
+            <Link
+              key={index}
+              href={item.link}
+              onClick={() => closeSideMenu()}
+              className="flex items-center mt-5 p-2 hover:bg-gray-100 rounded transition-all"
+            >
+              {item.icon}
+              <span className="ml-3 text-lg">{item.title}</span>
+            </Link>
+          ))}
         {!isAuthenticated && (
           <Link
             href="/auth/login"
@@ -92,28 +122,26 @@ export const Sidebar = () => {
         )}
 
         {/* Line separator */}
-        <div className="w-full h-px bg-gray-200 my-10"></div>
-        <Link
-          href="/"
-          className="flex items-center mt-5 p-2 hover:bg-gray-100 rounded transition-all"
-        >
-          <IoShirtOutline size={30} />
-          <span className="ml-3 text-lg">Productos</span>
-        </Link>
-        <Link
-          href="/"
-          className="flex items-center mt-5 p-2 hover:bg-gray-100 rounded transition-all"
-        >
-          <IoTicketOutline size={30} />
-          <span className="ml-3 text-lg">Ordenes</span>
-        </Link>
-        <Link
-          href="/"
-          className="flex items-center mt-5 p-2 hover:bg-gray-100 rounded transition-all"
-        >
-          <IoPeopleOutline size={30} />
-          <span className="ml-3 text-lg">Clientes</span>
-        </Link>
+        {isAuthenticated && isAdmin && (
+          <div className="w-full h-px bg-gray-200 my-10"></div>
+        )}
+
+        {
+          // Admin menu
+          isAuthenticated &&
+            isAdmin &&
+            adminNav.map((item, index) => (
+              <Link
+                key={index}
+                href={item.link}
+                onClick={() => closeSideMenu()}
+                className="flex items-center mt-5 p-2 hover:bg-gray-100 rounded transition-all"
+              >
+                {item.icon}
+                <span className="ml-3 text-lg">{item.title}</span>
+              </Link>
+            ))
+        }
       </nav>
     </div>
   );
