@@ -6,3 +6,4 @@ export * from "./product/get-stock-by-slug";
 // AUTH
 export * from "./auth/login";
 export * from "./auth/logout";
+export * from "./auth/registerUser";

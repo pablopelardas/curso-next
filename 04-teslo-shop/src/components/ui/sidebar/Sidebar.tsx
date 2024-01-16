@@ -23,12 +23,14 @@ export const Sidebar = () => {
   const isAuthenticated = !!session?.user;
   const isAdmin = session?.user.role === "ADMIN";
 
-  const userNav = [
+  const generalNav = [
     {
       title: "Perfil",
       icon: <IoPersonOutline size={30} />,
       link: "/profile",
     },
+  ];
+  const userNav = [
     {
       title: "Ordenes",
       icon: <IoTicketOutline size={30} />,
@@ -88,6 +90,18 @@ export const Sidebar = () => {
           />
         </div>
         {/* Menu */}
+        {/* General menu */}
+        {generalNav.map((item, index) => (
+          <Link
+            key={index}
+            href={item.link}
+            onClick={() => closeSideMenu()}
+            className="flex items-center mt-5 p-2 hover:bg-gray-100 rounded transition-all"
+          >
+            {item.icon}
+            <span className="ml-3 text-lg">{item.title}</span>
+          </Link>
+        ))}
         {isAuthenticated &&
           !isAdmin &&
           userNav.map((item, index) => (
