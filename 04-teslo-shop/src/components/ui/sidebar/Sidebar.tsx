@@ -1,7 +1,7 @@
 "use client";
+import { logout } from "@/actions";
 import { useUIStore } from "@/store";
 import clsx from "clsx";
-import { close } from "inspector";
 import Link from "next/link";
 import {
   IoCloseOutline,
@@ -67,19 +67,20 @@ export const Sidebar = () => {
           <span className="ml-3 text-lg">Ordenes</span>
         </Link>
         <Link
-          href="/"
+          href="/auth/login"
+          onClick={() => closeSideMenu()}
           className="flex items-center mt-5 p-2 hover:bg-gray-100 rounded transition-all"
         >
           <IoLogInOutline size={30} />
           <span className="ml-3 text-lg">Ingresar</span>
         </Link>
-        <Link
-          href="/"
-          className="flex items-center mt-5 p-2 hover:bg-gray-100 rounded transition-all"
+        <button
+          className="flex w-full items-center mt-5 p-2 hover:bg-gray-100 rounded transition-all"
+          onClick={() => logout()}
         >
           <IoLogOutOutline size={30} />
           <span className="ml-3 text-lg">Salir</span>
-        </Link>
+        </button>
         {/* Line separator */}
         <div className="w-full h-px bg-gray-200 my-10"></div>
         <Link
