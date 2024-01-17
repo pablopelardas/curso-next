@@ -1,7 +1,14 @@
 "use client";
-import { Country } from "@/interfaces";
-import clsx from "clsx";
+import { useEffect, useState } from "react";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
+
 import { useForm } from "react-hook-form";
+import clsx from "clsx";
+
+import { useAddressStore } from "@/store";
+import { Address, Country } from "@/interfaces";
+import { removeUserAddress, setUserAddress } from "@/actions";
 
 interface AddressFormInputs {
   firstName: string;
@@ -17,23 +24,51 @@ interface AddressFormInputs {
 
 interface Props {
   countries: Country[];
+  dbAddress?: Partial<Address>;
 }
 
-export const CheckoutAddressForm = ({ countries }: Props) => {
+export const CheckoutAddressForm = ({ countries, dbAddress = {} }: Props) => {
   const {
     register,
     handleSubmit,
-    formState: { errors, isValid },
+    formState: { isValid },
+    reset,
   } = useForm<AddressFormInputs>({
     defaultValues: {
-      // todo: get from localstorage
+      ...dbAddress,
+      rememberAddress: true,
     },
   });
 
-  const onSubmit = (data: AddressFormInputs) => {
-    console.log(data);
-  };
+  const { data: session } = useSession({
+    required: true,
+  });
+  const initialAddress = useAddressStore((state) => state.address);
+  const setAddress = useAddressStore((state) => state.setAddress);
+  const [loading, setLoading] = useState(true);
+  const router = useRouter();
 
+  useEffect(() => {
+    if (session?.user?.id) {
+      setLoading(false);
+    }
+  }, [session]);
+
+  useEffect(() => {
+    if (initialAddress.firstName) reset(initialAddress);
+  }, [initialAddress, reset]);
+
+  const onSubmit = async (data: AddressFormInputs) => {
+    const { rememberAddress, ...address } = data;
+    if (rememberAddress) {
+      await setUserAddress(address, session!.user.id);
+    } else {
+      await removeUserAddress(session!.user.id);
+    }
+    setAddress(data);
+    router.push("/checkout");
+  };
+  if (loading) return <div>Cargando sesion...</div>;
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}

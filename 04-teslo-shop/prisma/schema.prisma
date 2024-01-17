@@ -70,9 +70,29 @@ model User {
   emailVerified DateTime?
   role          Role      @default(USER)
   image         String?
+
+  address UserAddress?
 }
 
 model Country {
-  id   String @id
-  name String @unique
+  id          String        @id
+  name        String        @unique
+  UserAddress UserAddress[]
+}
+
+model UserAddress {
+  id        String  @id @default(uuid())
+  firstName String
+  lastName  String
+  address   String
+  address2  String?
+  zip       String
+  city      String
+  phone     String
+
+  country   Country @relation(fields: [countryId], references: [id])
+  countryId String
+
+  user   User   @relation(fields: [userId], references: [id])
+  userId String @unique
 }

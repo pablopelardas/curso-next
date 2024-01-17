@@ -10,3 +10,8 @@ export * from "./countries/get-countries";
 export * from "./auth/login";
 export * from "./auth/logout";
 export * from "./auth/registerUser";
+
+// ADDRESS
+export * from "./address/set-user-address";
+export * from "./address/remove-user-address";
+export * from "./address/get-user-address";
