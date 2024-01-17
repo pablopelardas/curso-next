@@ -4,6 +4,13 @@ import z from "zod";
 import prisma from "./lib/prisma";
 import bcryptjs from "bcryptjs";
 
+const authenticatedRoutes = [
+  "/checkout",
+  "/checkout/payment",
+  "/checkout/summary",
+  "/checkout/success",
+];
+
 export const authConfig: NextAuthConfig = {
   pages: {
     signIn: "/auth/login",
@@ -19,7 +26,6 @@ export const authConfig: NextAuthConfig = {
       return token;
     },
     session({ session, token, user }) {
-      console.log({ session, token, user });
       if (token?.data) {
         session.user = token.data as any;
       }

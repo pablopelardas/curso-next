@@ -7,9 +7,10 @@ async function main() {
     await prisma.productImage.deleteMany({}),
     await prisma.product.deleteMany({}),
     await prisma.category.deleteMany({}),
+    await prisma.country.deleteMany({}),
   ]);
 
-  const { categories, products, users } = initialData;
+  const { categories, products, users, countries } = initialData;
 
   // Users
   await prisma.user.createMany({
@@ -64,6 +65,11 @@ async function main() {
 
   await prisma.productImage.createMany({
     data: images,
+  });
+
+  // Countries
+  await prisma.country.createMany({
+    data: countries,
   });
 
   console.log("Seed ejecutado correctamente");
