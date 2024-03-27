@@ -12,7 +12,7 @@ export const getUserAddress = async (
       },
     });
     if (!address) return {};
-    const { countryId, address2, ...rest } = address;
+    const { countryId, address2, userId: user, id,  ...rest } = address;
     return {
       ...rest,
       country: countryId,

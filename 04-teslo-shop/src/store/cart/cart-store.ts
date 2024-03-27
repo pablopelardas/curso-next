@@ -13,6 +13,7 @@ interface State {
   };
   updateProductQuantity: (product: CartProduct, quantity: number) => void;
   removeProductFromCart: (product: CartProduct) => void;
+  clearCart: () => void;
 }
 
 const isSameProduct = (product: CartProduct, otherProduct: CartProduct) =>
@@ -67,6 +68,9 @@ const useCartStore = create<State>()(
         const updatedCart = cart.filter((p) => !isSameProduct(p, product));
         set({ cart: updatedCart });
       },
+      clearCart: () => {
+        set({ cart: [] });
+      }
     }),
     {
       name: "shopping-cart",

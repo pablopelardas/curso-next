@@ -1,18 +1,19 @@
 // https://tailwindcomponents.com/component/hoverable-table
-import { getOrdersByUser } from "@/actions";
+import {  getPaginatedOrders } from "@/actions";
 import { Title } from "@/components";
 import { OrderRow } from "./ui/OrderRow";
+import { redirect } from "next/navigation";
 
 export default async function OrdersPage() {
-  const {orders, ok} = await getOrdersByUser();
+  const {orders, ok} = await getPaginatedOrders({});
   if (!ok) {
-    return <div>No hay ordenes</div>;
+    redirect("/auth/login")
   }
   console.log(orders)
 
   return (
     <>
-      <Title title="Orders" />
+      <Title title="Todas las Ordenes" />
 
       <div className="mb-10">
         <table className="min-w-full">

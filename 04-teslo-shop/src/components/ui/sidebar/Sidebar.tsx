@@ -34,7 +34,7 @@ export const Sidebar = () => {
     {
       title: "Ordenes",
       icon: <IoTicketOutline size={30} />,
-      link: "/",
+      link: "/orders",
     },
   ];
 
@@ -42,17 +42,17 @@ export const Sidebar = () => {
     {
       title: "Productos",
       icon: <IoShirtOutline size={30} />,
-      link: "/",
+      link: "/admin/products",
     },
     {
       title: "Ordenes",
       icon: <IoTicketOutline size={30} />,
-      link: "/",
+      link: "/admin/orders",
     },
     {
       title: "Clientes",
       icon: <IoPeopleOutline size={30} />,
-      link: "/",
+      link: "/admin/clients",
     },
   ];
 

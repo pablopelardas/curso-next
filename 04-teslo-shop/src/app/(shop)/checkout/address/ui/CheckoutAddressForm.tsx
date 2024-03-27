@@ -27,7 +27,7 @@ interface Props {
   dbAddress?: Partial<Address>;
 }
 
-export const CheckoutAddressForm = ({ countries, dbAddress = {} }: Props) => {
+  export const CheckoutAddressForm = ({ countries, dbAddress = {} }: Props) => {
   const {
     register,
     handleSubmit,
@@ -59,13 +59,14 @@ export const CheckoutAddressForm = ({ countries, dbAddress = {} }: Props) => {
   }, [initialAddress, reset]);
 
   const onSubmit = async (data: AddressFormInputs) => {
+    console.log(data)
     const { rememberAddress, ...address } = data;
     if (rememberAddress) {
       await setUserAddress(address, session!.user.id);
     } else {
       await removeUserAddress(session!.user.id);
     }
-    setAddress(data);
+    setAddress(address);
     router.push("/checkout");
   };
   if (loading) return <div>Cargando sesion...</div>;

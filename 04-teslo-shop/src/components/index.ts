@@ -1,4 +1,5 @@
-export { Provider } from "./provider/Provider";
+export { OrderStatus } from './orders/OrderStatus';
+export { Providers } from "./providers/Providers";
 export { Footer } from "./ui/footer/Footer";
 export { PageNotFound } from "./ui/not-found/PageNotFound";
 export { Pagination } from "./ui/pagination/Pagination";
@@ -11,3 +12,4 @@ export { SizeSelector } from "./product/size-selector/SizeSelector";
 export { StockLabel } from "./product/stock-label/StockLabel";
 export { Title } from "./ui/title/Title";
 export { TopMenu } from "./ui/top-menu/TopMenu";
+export { PayPalButton } from "./paypal/PayPalButton";
