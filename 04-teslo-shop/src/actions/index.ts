@@ -3,6 +3,7 @@
 export * from "./products/products-pagination";
 export * from "./product/get-product-by-slug";
 export * from "./product/get-stock-by-slug";
+export * from "./product/create-update-product";
 
 // COUNTRIES
 export * from "./countries/get-countries";
@@ -26,3 +27,11 @@ export * from './order/get-paginated-orders'
 // PAYMENTS
 export * from './payments/set-transaction-id'
 export * from './payments/paypal-check-payment'
+
+
+// USERS
+export * from './users/get-paginated-users'
+export * from './users/set-user-role'
+
+// CATEGORIES
+export * from './category/get-categories'

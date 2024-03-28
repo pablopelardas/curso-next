@@ -50,9 +50,9 @@ export const Sidebar = () => {
       link: "/admin/orders",
     },
     {
-      title: "Clientes",
+      title: "Usuarios",
       icon: <IoPeopleOutline size={30} />,
-      link: "/admin/clients",
+      link: "/admin/users",
     },
   ];
 

@@ -12,6 +12,7 @@ export const getProductBySlug = async (slug: string) => {
         ProductImage: {
           select: {
             url: true,
+            id: true,
           },
         },
       },
@@ -20,7 +21,10 @@ export const getProductBySlug = async (slug: string) => {
     const { ProductImage, ...rest } = product;
     return {
       ...rest,
-      images: ProductImage.map((image) => image.url),
+      images: ProductImage.map((image) => ({
+        id: image.id,
+        url: image.url,
+      })),
     };
   } catch (error) {
     console.log(error);

@@ -22,6 +22,7 @@ export const getPaginatedproducts = async ({
       {
         ProductImage: {
           url: string;
+          id: number;
         }[];
       } & Product
     > = [];
@@ -50,6 +51,7 @@ export const getPaginatedproducts = async ({
               take: 2,
               select: {
                 url: true,
+                id: true,
               },
             },
           },
@@ -62,7 +64,10 @@ export const getPaginatedproducts = async ({
       products: Array.isArray(products)
         ? products.map((product) => ({
             ...product,
-            images: product.ProductImage.map((image) => image.url),
+            images: product.ProductImage.map((image) => ({
+              id: image.id,
+              url: image.url,
+            })),
           }))
         : [],
     };
