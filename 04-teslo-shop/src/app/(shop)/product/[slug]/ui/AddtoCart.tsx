@@ -26,7 +26,7 @@ export const AddtoCart = ({ product }: Props) => {
     const cartProduct: CartProduct = {
       id: product.id,
       slug: product.slug,
-      image: product.images[0].url,
+      image: product.images[0]?.url || "",
       price: product.price,
       title: product.title,
       size,

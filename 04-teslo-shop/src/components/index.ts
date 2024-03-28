@@ -1,3 +1,4 @@
+export  { ProductImage } from './product/product-image/ProductImage';
 export { OrderStatus } from './orders/OrderStatus';
 export { Providers } from "./providers/Providers";
 export { Footer } from "./ui/footer/Footer";

@@ -1,5 +1,6 @@
 "use client"
 
+import { ProductImage } from "@/components";
 import { Product } from "@/interfaces";
 import { currencyFormat } from "@/utils";
 import Image from "next/image";
@@ -58,7 +59,7 @@ export const ProductsTable = ({products}: Props) => {
             <tr key={product.id} className="bg-white border-b transition duration-300 ease-in-out hover:bg-gray-100">
             <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
               <Link href={`/product/${product.slug}`}>
-                <Image src={`/products/${product.images[0]?.url}`} alt={product.title} width={80} height={80} className="w-20 h-20 object-cover rounded" />
+                <ProductImage src={product.images[0]?.url} alt={product.title} width={80} height={80} className="w-20 h-20 object-cover rounded" />
               </Link>
             </td>
             <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">

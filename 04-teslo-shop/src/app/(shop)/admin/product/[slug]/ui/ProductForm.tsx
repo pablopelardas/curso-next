@@ -1,13 +1,14 @@
 "use client";
 
-import { createUpdateProduct } from "@/actions";
+import { createUpdateProduct, deleteProductImage } from "@/actions";
+import { ProductImage } from "@/components";
 import {  Category, Product, Size } from "@/interfaces";
 import clsx from "clsx";
-import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 
 interface Props {
-  product: Partial<Product>;
+  product: Partial<Product> & {categoryId?: string};
   categories : Category[];
 }
 
@@ -23,14 +24,12 @@ interface FormInputs{
   tags: string // camisa, t-shirt, ... => set
   gender: 'men' | 'women' | 'kid' | 'unisex';
   categoryId: string;
-  images: {
-    url: string;
-    id: number;
-  }[]
-  //todo: images
+  images?: FileList
 }
 
 export const ProductForm = ({ product, categories }: Props) => {
+
+  const router = useRouter();
 
   const {
     handleSubmit,
@@ -48,8 +47,9 @@ export const ProductForm = ({ product, categories }: Props) => {
       inStock: product.inStock,
       sizes: product.sizes ?? [],
       tags: product.tags?.join(", ") ?? "",
-      images: product.images ?? [],
-      // todo: images
+      gender: product.gender,
+      categoryId: product.categoryId ?? '',
+      images: undefined
     }
   });
 
@@ -65,7 +65,7 @@ export const ProductForm = ({ product, categories }: Props) => {
     console.log('onSubmit', data)
     const formData = new FormData();
 
-    const {...productToSave} = data;
+    const {images, ...productToSave} = data;
 
     if (product.id){
       formData.append('id', product.id ?? '')
@@ -79,12 +79,24 @@ export const ProductForm = ({ product, categories }: Props) => {
     formData.append('tags', productToSave.tags);
     formData.append('categoryId', productToSave.categoryId);
     formData.append('gender', productToSave.gender)
+    if (images){
+      for (let i = 0; i < images.length; i++){
+        console.log('images', images[i])
+        formData.append('images', images[i])
+      }
+    }
+    console.log(formData.getAll('images'))
 
-    const {ok} = await createUpdateProduct(formData);
 
-    console.log('ok', {
-      ok,
-    })
+    const {ok, product: updatedProduct} = await createUpdateProduct(formData);
+
+    if (!ok){
+      alert('Error al guardar el producto')
+      return;
+    }
+
+    router.replace(`/admin/product/${updatedProduct?.slug}`)
+
   }
 
   return (
@@ -186,7 +198,8 @@ export const ProductForm = ({ product, categories }: Props) => {
               type="file"
               multiple 
               className="p-2 border rounded-md bg-gray-200" 
-              accept="image/png, image/jpeg"
+              accept="image/png, image/jpeg, image/avif"
+              {...register('images')}
             />
 
           </div>
@@ -195,8 +208,8 @@ export const ProductForm = ({ product, categories }: Props) => {
             {
               product.images?.map( image => (
                 <div key={ image.id } >
-                  <Image src={ `/products/${image.url}` } alt={ product.title || '' } width={ 300 } height={ 300 } className="rounded shadow-md"/>
-                  <button onClick={() => console.log(image.id, image.url)} type="button" className="btn-danger rounded-b-xl w-full">
+                  <ProductImage src={ image.url } alt={ product.title || '' } width={ 300 } height={ 300 } className="rounded shadow-md"/>
+                  <button onClick={() => deleteProductImage(image.id, image.url)} type="button" className="btn-danger rounded-b-xl w-full">
                     Eliminar
                   </button>
                 </div>

@@ -11,6 +11,7 @@ import "swiper/css/thumbs";
 import "./ProductSlideshow.css";
 import React, { useState } from "react";
 import { Autoplay, FreeMode, Navigation, Thumbs } from "swiper/modules";
+import { ProductImage } from "@/components";
 
 interface Props {
   images: {
@@ -44,8 +45,8 @@ export const ProductSlideshow = ({ images, title, className }: Props) => {
       >
         {images.map((image) => (
           <SwiperSlide key={image.id}>
-            <Image
-              src={`/products/${image.url}`}
+            <ProductImage
+              src={image.url}
               alt={title}
               width={600}
               height={600}
@@ -65,8 +66,8 @@ export const ProductSlideshow = ({ images, title, className }: Props) => {
       >
         {images.map((image) => (
           <SwiperSlide key={image.id}>
-            <Image
-              src={`/products/${image.url}`}
+            <ProductImage
+              src={image.url}
               alt={title}
               width={600}
               height={600}
