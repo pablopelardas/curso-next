@@ -5,7 +5,7 @@ import { revalidatePath } from 'next/cache';
           
 cloudinary.config(process.env.CLOUDINARY_URL ?? '');
 
-export const deleteProductImage = async ( imageId: string, imageUrl: string) => {
+export const deleteProductImage = async ( imageId: number, imageUrl: string) => {
     console.log("deleteProductImage", imageId, imageUrl)
 
     if (!imageUrl.startsWith('http')){
@@ -23,7 +23,7 @@ export const deleteProductImage = async ( imageId: string, imageUrl: string) => 
         await cloudinary.uploader.destroy(`products/${imageName}`);
         const deletedImage = await prisma.productImage.delete({
             where:{
-                id: Number(imageId)
+                id: imageId
             },
             select:{
                 product:{

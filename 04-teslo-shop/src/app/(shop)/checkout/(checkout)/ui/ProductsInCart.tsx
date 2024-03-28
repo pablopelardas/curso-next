@@ -16,7 +16,7 @@ export const ProductsInCart = () => {
       router.replace("/empty");
     }
     setLoaded(true);
-  }, []);
+  }, [productsInCart.length, router]);
 
   if (!loaded) {
     return <div className="flex justify-center items-center">Loading ...</div>;
